@@ -9,6 +9,11 @@ namespace ScrollMesh
         public Material _mMaterial = null;
         private Mesh _mMesh = null;
 
+        float GetHeight(float x)
+        {
+            return Mathf.Cos(x);
+        }
+
         // Use this for initialization
         void Start()
         {
@@ -24,18 +29,20 @@ namespace ScrollMesh
 
             const float width = 0.25f;
             int index = 0;
-            for (int i = 0; i < 10; ++i)
+            for (int i = -12; i < 24; ++i)
             {
                 float x = i * width;
 
-                // test slope
-                float val = i + 1;
-                float height = 5f / (float)val;
+                float height = 2;
+                float height1 = height + height * GetHeight(x);
+                float height2 = height + height * GetHeight(x + width);
 
+                // test slope
                 Vector3 p1 = new Vector3(x, 0, 0);
                 Vector3 p2 = new Vector3(x + width, 0, 0);
-                Vector3 p3 = new Vector3(x + width, height, 0);
-                Vector3 p4 = new Vector3(x, height, 0);
+                Vector3 p3 = new Vector3(x + width, height2, 0);
+                Vector3 p4 = new Vector3(x, height1, 0);
+
                 verts.Add(p1);
                 verts.Add(p2);
                 verts.Add(p3);
