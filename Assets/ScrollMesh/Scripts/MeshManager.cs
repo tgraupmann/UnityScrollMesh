@@ -6,8 +6,8 @@ namespace ScrollMesh
 {
     public class MeshManager : MonoBehaviour
     {
-        private const float WIDTH = 3f;
-        private const float HEIGHT = 1;
+        private const float WIDTH = 0.25f;
+        private const float HEIGHT = 2f;
 
         public Material _mGroundMaterial = null;
         public Material _mSnowMaterial = null;
@@ -18,7 +18,9 @@ namespace ScrollMesh
             public MeshFilter _mMeshFilter = null;
             public Mesh _mMesh = null;
             public MeshRenderer _mMeshRenderer = null;
+            public MeshCollider _mMeshCollider = null;
             public List<Vector3> _mVerts = new List<Vector3>();
+            public List<Vector3> _mNormals = new List<Vector3>();
             public List<int> _mFaces = new List<int>();
             public List<Vector2> _mUvs = new List<Vector2>();
 
@@ -26,8 +28,10 @@ namespace ScrollMesh
             {
                 _mGameObject = GameObject.CreatePrimitive(PrimitiveType.Plane);
                 _mMeshFilter = _mGameObject.GetComponent<MeshFilter>();
+                _mMeshCollider = _mGameObject.GetComponent<MeshCollider>();
                 _mMesh = Object.Instantiate(_mMeshFilter.sharedMesh);
-                _mMeshFilter.sharedMesh = _mMesh;
+                _mMeshFilter.mesh = _mMesh;
+                _mMeshCollider.sharedMesh = _mMesh;
 
                 // clear faces
                 _mMesh.triangles = new int[0];
@@ -36,8 +40,9 @@ namespace ScrollMesh
             public void Apply(Material material)
             {
                 _mMesh.vertices = _mVerts.ToArray();
-                _mMesh.triangles = _mFaces.ToArray();
+                _mMesh.normals = _mNormals.ToArray();
                 _mMesh.uv = _mUvs.ToArray();
+                _mMesh.triangles = _mFaces.ToArray();
 
                 _mMeshRenderer = _mGameObject.GetComponent<MeshRenderer>();
                 _mMeshRenderer.sharedMaterial = material;
@@ -67,15 +72,24 @@ namespace ScrollMesh
             meshInstance._mFaces.Add(f4);
             meshInstance._mFaces.Add(f3);
             // barycentric uvs
+            /*
             meshInstance._mUvs.Add(new Vector2(0, 0));
             meshInstance._mUvs.Add(new Vector2(1, 0));
             meshInstance._mUvs.Add(new Vector2(1, 1));
             meshInstance._mUvs.Add(new Vector2(0, 1));
+            */
             // experiment
-            //meshInstance._mUvs.Add(new Vector2(meshInstance._mVerts[f1].x, meshInstance._mVerts[f1].y));
-            //meshInstance._mUvs.Add(new Vector2(meshInstance._mVerts[f2].x, meshInstance._mVerts[f2].y));
-            //meshInstance._mUvs.Add(new Vector2(meshInstance._mVerts[f3].x, meshInstance._mVerts[f3].y));
-            //meshInstance._mUvs.Add(new Vector2(meshInstance._mVerts[f4].x, meshInstance._mVerts[f4].y));
+            ///*
+            meshInstance._mUvs.Add(new Vector2(meshInstance._mVerts[f1].x, meshInstance._mVerts[f1].y));
+            meshInstance._mUvs.Add(new Vector2(meshInstance._mVerts[f2].x, meshInstance._mVerts[f2].y));
+            meshInstance._mUvs.Add(new Vector2(meshInstance._mVerts[f3].x, meshInstance._mVerts[f3].y));
+            meshInstance._mUvs.Add(new Vector2(meshInstance._mVerts[f4].x, meshInstance._mVerts[f4].y));
+            //*/
+
+            meshInstance._mNormals.Add(Vector3.up);
+            meshInstance._mNormals.Add(Vector3.up);
+            meshInstance._mNormals.Add(Vector3.up);
+            meshInstance._mNormals.Add(Vector3.up);
         }
 
         void CreateGround(MeshInstance meshInstance, float x, int index)
@@ -101,7 +115,7 @@ namespace ScrollMesh
             float base2 = height2 - coverage;
 
             // test slope
-            float depth = -0.1f;
+            float depth = -0.01f;
             meshInstance._mVerts.Add(new Vector3(x, base1, depth));
             meshInstance._mVerts.Add(new Vector3(x + WIDTH, base2, depth));
             meshInstance._mVerts.Add(new Vector3(x + WIDTH, height2, depth));
@@ -117,8 +131,8 @@ namespace ScrollMesh
             _mSnowMesh.Init();
 
             int index = 0;
-            int size = 4;
-            for (int i = -size; i < 0; ++i)
+            int size = 20;
+            for (int i = -size; i < size; ++i)
             {
                 float x = (i + 2) * WIDTH;
 
