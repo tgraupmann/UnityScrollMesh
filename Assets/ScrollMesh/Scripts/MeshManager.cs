@@ -6,8 +6,8 @@ namespace ScrollMesh
 {
     public class MeshManager : MonoBehaviour
     {
-        const float WIDTH = 0.25f;
-        const float HEIGHT = 2;
+        private const float WIDTH = 3f;
+        private const float HEIGHT = 1;
 
         public Material _mGroundMaterial = null;
         public Material _mSnowMaterial = null;
@@ -71,6 +71,11 @@ namespace ScrollMesh
             meshInstance._mUvs.Add(new Vector2(1, 0));
             meshInstance._mUvs.Add(new Vector2(1, 1));
             meshInstance._mUvs.Add(new Vector2(0, 1));
+            // experiment
+            //meshInstance._mUvs.Add(new Vector2(meshInstance._mVerts[f1].x, meshInstance._mVerts[f1].y));
+            //meshInstance._mUvs.Add(new Vector2(meshInstance._mVerts[f2].x, meshInstance._mVerts[f2].y));
+            //meshInstance._mUvs.Add(new Vector2(meshInstance._mVerts[f3].x, meshInstance._mVerts[f3].y));
+            //meshInstance._mUvs.Add(new Vector2(meshInstance._mVerts[f4].x, meshInstance._mVerts[f4].y));
         }
 
         void CreateGround(MeshInstance meshInstance, float x, int index)
@@ -112,9 +117,10 @@ namespace ScrollMesh
             _mSnowMesh.Init();
 
             int index = 0;
-            for (int i = -36; i < 36; ++i)
+            int size = 4;
+            for (int i = -size; i < 0; ++i)
             {
-                float x = i * WIDTH;
+                float x = (i + 2) * WIDTH;
 
                 CreateGround(_mGroundMesh, x, index);
                 CreateSnow(_mSnowMesh, x, index);
