@@ -6,12 +6,67 @@ namespace ScrollMesh
 {
     public class MeshManager : MonoBehaviour
     {
+        const float WIDTH = 0.25f;
+        const float HEIGHT = 2;
+
         public Material _mMaterial = null;
         private Mesh _mMesh = null;
+        private List<Vector3> _mVerts = new List<Vector3>();
+        private List<int> _mFaces = new List<int>();
+        private List<Vector2> _mUvs = new List<Vector2>();
 
         float GetHeight(float x)
         {
-            return Mathf.Cos(x);
+            return HEIGHT + HEIGHT * Mathf.Cos(x);
+        }
+
+        void CreateFaces(int index)
+        {
+            int f1 = index + 0;
+            int f2 = index + 1;
+            int f3 = index + 2;
+            int f4 = index + 3;
+            // face 1
+            _mFaces.Add(f3);
+            _mFaces.Add(f2);
+            _mFaces.Add(f1);
+            // face 2
+            _mFaces.Add(f1);
+            _mFaces.Add(f4);
+            _mFaces.Add(f3);
+            // barycentric uvs
+            _mUvs.Add(new Vector2(0, 0));
+            _mUvs.Add(new Vector2(1, 0));
+            _mUvs.Add(new Vector2(1, 1));
+            _mUvs.Add(new Vector2(0, 1));
+        }
+
+        void CreateGround(float x, int index)
+        {
+            float height1 = GetHeight(x);
+            float height2 = GetHeight(x + WIDTH);
+
+            // test slope
+            _mVerts.Add(new Vector3(x, 0, 0));
+            _mVerts.Add(new Vector3(x + WIDTH, 0, 0));
+            _mVerts.Add(new Vector3(x + WIDTH, height2, 0));
+            _mVerts.Add(new Vector3(x, height1, 0));
+
+            CreateFaces(index);
+        }
+
+        void CreateSnow(float x, int index)
+        {
+            float height1 = GetHeight(x);
+            float height2 = GetHeight(x + WIDTH);
+
+            // test slope
+            _mVerts.Add(new Vector3(x, 0, 0));
+            _mVerts.Add(new Vector3(x + WIDTH, 0, 0));
+            _mVerts.Add(new Vector3(x + WIDTH, height2, 0));
+            _mVerts.Add(new Vector3(x, height1, 0));
+
+            CreateFaces(index);
         }
 
         // Use this for initialization
@@ -21,64 +76,26 @@ namespace ScrollMesh
             MeshFilter meshFilter = gameObject.GetComponent<MeshFilter>();
             _mMesh = meshFilter.sharedMesh;
 
-            _mMesh.triangles = new int[0];
+            // clear faces
+            _mMesh.triangles = new int[0];     
 
-            List<Vector3> verts = new List<Vector3>();
-            List<int> faces = new List<int>();
-            List<Vector2> uvs = new List<Vector2>();
-
-            const float width = 0.25f;
             int index = 0;
             for (int i = -12; i < 24; ++i)
             {
-                float x = i * width;
+                float x = i * WIDTH;
 
-                float height = 2;
-                float height1 = height + height * GetHeight(x);
-                float height2 = height + height * GetHeight(x + width);
+                CreateGround(x, index);
+                CreateSnow(x, index);
 
-                // test slope
-                Vector3 p1 = new Vector3(x, 0, 0);
-                Vector3 p2 = new Vector3(x + width, 0, 0);
-                Vector3 p3 = new Vector3(x + width, height2, 0);
-                Vector3 p4 = new Vector3(x, height1, 0);
-
-                verts.Add(p1);
-                verts.Add(p2);
-                verts.Add(p3);
-                verts.Add(p4);
-                int f1 = index + 0;
-                int f2 = index + 1;
-                int f3 = index + 2;
-                int f4 = index + 3;
-                // face 1
-                faces.Add(f3);
-                faces.Add(f2);
-                faces.Add(f1);
-                // face 2
-                faces.Add(f1);
-                faces.Add(f4);
-                faces.Add(f3);
                 index += 4;
-                // barycentric uvs
-                uvs.Add(new Vector2(0,0));
-                uvs.Add(new Vector2(1,0));
-                uvs.Add(new Vector2(1,1));
-                uvs.Add(new Vector2(0,1));
             }
 
-            _mMesh.vertices = verts.ToArray();
-            _mMesh.triangles = faces.ToArray();
-            _mMesh.uv = uvs.ToArray();
+            _mMesh.vertices = _mVerts.ToArray();
+            _mMesh.triangles = _mFaces.ToArray();
+            _mMesh.uv = _mUvs.ToArray();
 
             MeshRenderer mr = gameObject.GetComponent<MeshRenderer>();
             mr.sharedMaterial = _mMaterial;
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
         }
     }
 }
