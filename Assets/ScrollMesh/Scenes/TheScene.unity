@@ -118,7 +118,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94a122d902e48b24db10720f93148a07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mMaterial: {fileID: 2100000, guid: a85203b88d179bd4cae8ed7a3823715e, type: 2}
+  _mGroundMaterial: {fileID: 2100000, guid: a85203b88d179bd4cae8ed7a3823715e, type: 2}
+  _mSnowMaterial: {fileID: 2100000, guid: 554927b77d35d474db7a67521e544de3, type: 2}
 --- !u!4 &486633027
 Transform:
   m_ObjectHideFlags: 0
@@ -191,7 +192,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
+  orthographic: 1
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
