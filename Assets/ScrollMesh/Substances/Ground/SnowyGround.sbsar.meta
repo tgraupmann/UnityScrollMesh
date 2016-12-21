@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 74de5794d5af68f4199a6bb509ff44c8
-timeCreated: 1482314716
+timeCreated: 1482321651
 licenseType: Free
 SubstanceImporter:
   serializedVersion: 5
@@ -44,7 +44,7 @@ SubstanceImporter:
         texture: {instanceID: 0}
     - name: SnowAmmount
       value:
-        scalar[0]: 0.29
+        scalar[0]: 0.4
         scalar[1]: 0
         scalar[2]: 0
         scalar[3]: 0
@@ -80,7 +80,7 @@ SubstanceImporter:
     materialInformation:
       serializedVersion: 5
       offset: {x: 0, y: 0}
-      scale: {x: 1, y: 1}
+      scale: {x: 0.25, y: 0.25}
       generateMipmaps: 1
       generateAllOutputs: 0
       animationUpdateRate: 0

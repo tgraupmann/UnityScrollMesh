@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 8a45a354d9a0fa0499656abf86f4fa23
-timeCreated: 1482315069
+timeCreated: 1482321759
 licenseType: Free
 SubstanceImporter:
   serializedVersion: 5
@@ -44,7 +44,7 @@ SubstanceImporter:
         texture: {instanceID: 0}
     - name: SnowAmmount
       value:
-        scalar[0]: 0.511
+        scalar[0]: 1
         scalar[1]: 0
         scalar[2]: 0
         scalar[3]: 0
