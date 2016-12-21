@@ -71,25 +71,28 @@ namespace ScrollMesh
             meshInstance._mFaces.Add(f1);
             meshInstance._mFaces.Add(f4);
             meshInstance._mFaces.Add(f3);
-            // barycentric uvs
-            /*
-            meshInstance._mUvs.Add(new Vector2(0, 0));
-            meshInstance._mUvs.Add(new Vector2(1, 0));
-            meshInstance._mUvs.Add(new Vector2(1, 1));
-            meshInstance._mUvs.Add(new Vector2(0, 1));
-            */
-            // experiment
-            ///*
-            meshInstance._mUvs.Add(new Vector2(meshInstance._mVerts[f1].x, meshInstance._mVerts[f1].y));
-            meshInstance._mUvs.Add(new Vector2(meshInstance._mVerts[f2].x, meshInstance._mVerts[f2].y));
-            meshInstance._mUvs.Add(new Vector2(meshInstance._mVerts[f3].x, meshInstance._mVerts[f3].y));
-            meshInstance._mUvs.Add(new Vector2(meshInstance._mVerts[f4].x, meshInstance._mVerts[f4].y));
-            //*/
+            if (false)
+            {
+                // barycentric uvs
+                meshInstance._mUvs.Add(new Vector2(0, 0));
+                meshInstance._mUvs.Add(new Vector2(1, 0));
+                meshInstance._mUvs.Add(new Vector2(1, 1));
+                meshInstance._mUvs.Add(new Vector2(0, 1));
+            }
+            else
+            {
+                // experiment
+                meshInstance._mUvs.Add(new Vector2(meshInstance._mVerts[f1].x, meshInstance._mVerts[f1].y));
+                meshInstance._mUvs.Add(new Vector2(meshInstance._mVerts[f2].x, meshInstance._mVerts[f2].y));
+                meshInstance._mUvs.Add(new Vector2(meshInstance._mVerts[f3].x, meshInstance._mVerts[f3].y));
+                meshInstance._mUvs.Add(new Vector2(meshInstance._mVerts[f4].x, meshInstance._mVerts[f4].y));
+            }
 
-            meshInstance._mNormals.Add(Vector3.up);
-            meshInstance._mNormals.Add(Vector3.up);
-            meshInstance._mNormals.Add(Vector3.up);
-            meshInstance._mNormals.Add(Vector3.up);
+            Vector3 dir = 0.5f * (Vector3.up + Vector3.right);
+            meshInstance._mNormals.Add(dir);
+            meshInstance._mNormals.Add(dir);
+            meshInstance._mNormals.Add(dir);
+            meshInstance._mNormals.Add(dir);
         }
 
         void CreateGround(MeshInstance meshInstance, float x, int index)
