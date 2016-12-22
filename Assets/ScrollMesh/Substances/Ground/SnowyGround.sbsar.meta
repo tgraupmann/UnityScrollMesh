@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 74de5794d5af68f4199a6bb509ff44c8
-timeCreated: 1482321651
+timeCreated: 1482399311
 licenseType: Free
 SubstanceImporter:
   serializedVersion: 5
@@ -10,9 +10,9 @@ SubstanceImporter:
     prototypeName: SnowyGround
     shaderName: 
     shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-    shaderKeywords: 
+    shaderKeywords: _PARALLAXMAP
     renderQueue: -1
-    lightmapFlags: 5
+    lightmapFlags: 1
     inputs:
     - name: $outputsize
       value:
@@ -121,7 +121,7 @@ SubstanceImporter:
           name: _MainTex
         second:
           texture: {instanceID: 0}
-          scale: {x: 1, y: 1}
+          scale: {x: 0.25, y: 0.25}
           offset: {x: 0, y: 0}
       - first:
           name: _MetallicGlossMap
@@ -142,6 +142,9 @@ SubstanceImporter:
           scale: {x: 1, y: 1}
           offset: {x: 0, y: 0}
       floats:
+      - first:
+          name: PixelSnap
+        second: 0
       - first:
           name: _BumpScale
         second: 1

@@ -1,16 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace ScrollMesh
 {
     public class MeshManager : MonoBehaviour
     {
+        private const int SIZE = 4096;
         private const float WIDTH = 0.25f;
         private const float HEIGHT = 2f;
+        private const float BOTTOM = -10f;
 
         public Material _mGroundMaterial = null;
         public Material _mSnowMaterial = null;
+        public Material _mPhysicsMaterial = null;
 
         private class MeshInstance
         {
@@ -46,18 +48,19 @@ namespace ScrollMesh
 
                 _mMeshRenderer = _mGameObject.GetComponent<MeshRenderer>();
                 _mMeshRenderer.sharedMaterial = material;
+
+                _mMeshCollider.sharedMesh = _mMesh;
+                _mMeshFilter.mesh = _mMesh;
             }
         }
 
         private MeshInstance _mGroundMesh = new MeshInstance();
         private MeshInstance _mSnowMesh = new MeshInstance();
+        private MeshInstance _mPhysicsMesh = new MeshInstance();
 
-        float GetHeight(float x)
-        {
-            return HEIGHT + HEIGHT * Mathf.Cos(x);
-        }
+        public TerrainData _mTerrain = null;
 
-        void CreateFaces(MeshInstance meshInstance, int index)
+        void CreateFaces(MeshInstance meshInstance, int index, bool useBarycentric)
         {
             int f1 = index + 0;
             int f2 = index + 1;
@@ -71,7 +74,7 @@ namespace ScrollMesh
             meshInstance._mFaces.Add(f1);
             meshInstance._mFaces.Add(f4);
             meshInstance._mFaces.Add(f3);
-            if (false)
+            if (useBarycentric)
             {
                 // barycentric uvs
                 meshInstance._mUvs.Add(new Vector2(0, 0));
@@ -97,23 +100,23 @@ namespace ScrollMesh
 
         void CreateGround(MeshInstance meshInstance, float x, int index)
         {
-            float height1 = GetHeight(x);
-            float height2 = GetHeight(x + WIDTH);
+            float height1 = _mTerrain.GetHeight(x);
+            float height2 = _mTerrain.GetHeight(x + WIDTH);
 
             // test slope
-            meshInstance._mVerts.Add(new Vector3(x, 0, 0));
-            meshInstance._mVerts.Add(new Vector3(x + WIDTH, 0, 0));
+            meshInstance._mVerts.Add(new Vector3(x, BOTTOM, 0));
+            meshInstance._mVerts.Add(new Vector3(x + WIDTH, BOTTOM, 0));
             meshInstance._mVerts.Add(new Vector3(x + WIDTH, height2, 0));
             meshInstance._mVerts.Add(new Vector3(x, height1, 0));
 
-            CreateFaces(meshInstance, index);
+            CreateFaces(meshInstance, index, false);
         }
 
         void CreateSnow(MeshInstance meshInstance, float x, int index)
         {
             const float coverage = 0.5f;
-            float height1 = GetHeight(x) + coverage;
-            float height2 = GetHeight(x + WIDTH) + coverage;
+            float height1 = _mTerrain.GetHeight(x) + coverage;
+            float height2 = _mTerrain.GetHeight(x + WIDTH) + coverage;
             float base1 = height1 - coverage;
             float base2 = height2 - coverage;
 
@@ -124,7 +127,24 @@ namespace ScrollMesh
             meshInstance._mVerts.Add(new Vector3(x + WIDTH, height2, depth));
             meshInstance._mVerts.Add(new Vector3(x, height1, depth));
 
-            CreateFaces(meshInstance, index);
+            CreateFaces(meshInstance, index, false);
+        }
+
+        void CreatePhysics(MeshInstance meshInstance, float x, int index)
+        {
+            float base1 = _mTerrain.GetHeight(x);
+            float base2 = _mTerrain.GetHeight(x + WIDTH);
+
+            // test slope
+            float depth1 = -WIDTH;
+            float depth2 = WIDTH;
+
+            meshInstance._mVerts.Add(new Vector3(x, base1, depth1));
+            meshInstance._mVerts.Add(new Vector3(x + WIDTH, base2, depth1));
+            meshInstance._mVerts.Add(new Vector3(x + WIDTH, base2, depth2));
+            meshInstance._mVerts.Add(new Vector3(x, base1, depth2));
+
+            CreateFaces(meshInstance, index, true);
         }
 
         // Use this for initialization
@@ -132,21 +152,23 @@ namespace ScrollMesh
         {
             _mGroundMesh.Init();
             _mSnowMesh.Init();
+            _mPhysicsMesh.Init();
 
             int index = 0;
-            int size = 20;
-            for (int i = -size; i < size; ++i)
+            for (int i = -SIZE; i < SIZE; ++i)
             {
                 float x = (i + 2) * WIDTH;
 
                 CreateGround(_mGroundMesh, x, index);
                 CreateSnow(_mSnowMesh, x, index);
+                CreatePhysics(_mPhysicsMesh, x, index);
 
                 index += 4;
             }
 
             _mGroundMesh.Apply(_mGroundMaterial);
             _mSnowMesh.Apply(_mSnowMaterial);
+            _mPhysicsMesh.Apply(_mPhysicsMaterial);
         }
     }
 }
