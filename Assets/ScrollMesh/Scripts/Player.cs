@@ -15,6 +15,7 @@ namespace ScrollMesh
         public TerrainData _mTerrainData = null;
         public Rigidbody _mRigidBody = null;
         public GameObject _mGraphics = null;
+        public Camera _mCamera = null;
 
         private void Start()
         {
@@ -56,6 +57,8 @@ namespace ScrollMesh
             }
 
             transform.position = _mRigidBody.transform.position;
+
+            _mCamera.orthographicSize = Mathf.Clamp(transform.position.y, 10, 1000);
         }
     }
 }
