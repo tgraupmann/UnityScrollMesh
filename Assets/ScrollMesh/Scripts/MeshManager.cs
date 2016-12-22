@@ -31,12 +31,7 @@ namespace ScrollMesh
                 _mGameObject = GameObject.CreatePrimitive(PrimitiveType.Plane);
                 _mMeshFilter = _mGameObject.GetComponent<MeshFilter>();
                 _mMeshCollider = _mGameObject.GetComponent<MeshCollider>();
-                _mMesh = Object.Instantiate(_mMeshFilter.sharedMesh);
-                _mMeshFilter.mesh = _mMesh;
-                _mMeshCollider.sharedMesh = _mMesh;
-
-                // clear faces
-                _mMesh.triangles = new int[0];
+                _mMesh = new Mesh();
             }
 
             public void Apply(Material material)
