@@ -8,7 +8,7 @@ namespace ScrollMesh
         private const int SIZE = 4096;
         private const float WIDTH = 0.25f;
         private const float HEIGHT = 2f;
-        private const float BOTTOM = -10f;
+        private const float BOTTOM = -20f;
 
         public Material _mGroundMaterial = null;
         public Material _mSnowMaterial = null;
