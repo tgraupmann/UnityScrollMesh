@@ -6,6 +6,7 @@ namespace ScrollMesh
     {
         public float _mMoveForce = 100f;
         public float _mJumpForce = 5f;
+        public float _mTurnSpeed = 10f;
         public TerrainData _mTerrainData = null;
         public Rigidbody _mRigidBody = null;
         public GameObject _mGraphics = null;
@@ -29,7 +30,7 @@ namespace ScrollMesh
                 _mGraphics.transform.rotation = Quaternion.Lerp(
                     _mGraphics.transform.rotation,
                     Quaternion.Euler(0, 45, 0),
-                    Time.deltaTime);
+                    _mTurnSpeed * Time.deltaTime);
             }
 
             if (Input.GetKey(KeyCode.D))
@@ -40,7 +41,7 @@ namespace ScrollMesh
                 _mGraphics.transform.rotation = Quaternion.Lerp(
                     _mGraphics.transform.rotation,
                     Quaternion.Euler(0, -45, 0),
-                    Time.deltaTime);
+                    _mTurnSpeed * Time.deltaTime);
             }
 
             if (Input.GetKey(KeyCode.Space))
