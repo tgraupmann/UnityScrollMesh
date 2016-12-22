@@ -11,13 +11,11 @@ namespace ScrollMesh
         void OnCollisionEnter(Collision collision)
         {
             _mPlayer._mCanJump = true;
-            _mPlayer._mMoveForce = 100f;
         }
 
         void OnCollisionExit(Collision collision)
         {
             _mPlayer._mCanJump = false;
-            _mPlayer._mMoveForce = 1f;
         }
     }
 }

@@ -5,11 +5,10 @@ namespace ScrollMesh
     public class Player : MonoBehaviour
     {
         [System.NonSerialized]
-        public float _mMoveForce = 100f;
-
-        [System.NonSerialized]
         public bool _mCanJump = false;
 
+        public float _mMoveForceAir = 10f;
+        public float _mMoveForceGround = 1000f;
         public float _mJumpForce = 5f;
         public float _mTurnSpeed = 10f;
         public TerrainData _mTerrainData = null;
@@ -31,7 +30,15 @@ namespace ScrollMesh
             Vector3 pos = transform.position;
             if (Input.GetKey(KeyCode.A))
             {
-                Vector3 force = -_mMoveForce * Vector3.right * Time.deltaTime;
+                Vector3 force;
+                if (_mCanJump)
+                {
+                    force = -_mMoveForceGround * Vector3.right * Time.deltaTime;
+                }
+                else
+                {
+                    force = -_mMoveForceAir * Vector3.right * Time.deltaTime;
+                }
                 _mRigidBody.AddForce(force, ForceMode.VelocityChange);
 
                 _mGraphics.transform.rotation = Quaternion.Lerp(
@@ -42,7 +49,15 @@ namespace ScrollMesh
 
             if (Input.GetKey(KeyCode.D))
             {
-                Vector3 force = _mMoveForce * Vector3.right * Time.deltaTime;
+                Vector3 force;
+                if (_mCanJump)
+                {
+                    force = _mMoveForceGround * Vector3.right * Time.deltaTime;
+                }
+                else
+                {
+                    force = _mMoveForceAir * Vector3.right * Time.deltaTime;
+                }
                 _mRigidBody.AddForce(force, ForceMode.VelocityChange);
 
                 _mGraphics.transform.rotation = Quaternion.Lerp(
@@ -63,6 +78,8 @@ namespace ScrollMesh
                 Vector3 newPos = _mRigidBody.transform.position;
                 newPos.y = height + 10;
                 _mRigidBody.transform.position = newPos;
+                _mRigidBody.velocity = Vector3.zero;
+                return;
             }
 
             if ((_mRigidBody.transform.position.x + 4) > MeshManager.WORLD_SIZE)
@@ -71,6 +88,8 @@ namespace ScrollMesh
                 newPos.x = -MeshManager.WORLD_SIZE + 2;
                 newPos.y = _mTerrainData.GetHeight(newPos.x) + 10;
                 _mRigidBody.transform.position = newPos;
+                _mRigidBody.velocity = Vector3.zero;
+                return;
             }
 
             transform.position = _mRigidBody.transform.position;
