@@ -4,7 +4,12 @@ namespace ScrollMesh
 {
     public class Player : MonoBehaviour
     {
+        [System.NonSerialized]
         public float _mMoveForce = 100f;
+
+        [System.NonSerialized]
+        public bool _mCanJump = false;
+
         public float _mJumpForce = 5f;
         public float _mTurnSpeed = 10f;
         public TerrainData _mTerrainData = null;
@@ -44,7 +49,8 @@ namespace ScrollMesh
                     _mTurnSpeed * Time.deltaTime);
             }
 
-            if (Input.GetKey(KeyCode.Space))
+            if (_mCanJump &&
+                Input.GetKey(KeyCode.Space))
             {
                 _mRigidBody.AddForce(_mJumpForce * Vector3.up, ForceMode.VelocityChange);
             }
