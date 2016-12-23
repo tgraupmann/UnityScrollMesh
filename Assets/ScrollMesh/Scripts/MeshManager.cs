@@ -57,6 +57,8 @@ namespace ScrollMesh
 
         public TerrainData _mTerrain = null;
 
+        private List<GameObject> _mFloor = new List<GameObject>();
+
         void CreateFaces(MeshInstance meshInstance, int index, bool useBarycentric)
         {
             int f1 = index + 0;
@@ -131,6 +133,15 @@ namespace ScrollMesh
         {
             float base1 = _mTerrain.GetHeight(x);
             float base2 = _mTerrain.GetHeight(x + WIDTH);
+
+            float height = Mathf.Min(base1, base2);
+            GameObject floor = new GameObject("Floor");
+            floor.AddComponent<Floor>()._mHeight = Mathf.Max(base1, base2);
+            _mFloor.Add(floor);
+            BoxCollider boxCollider = floor.AddComponent<BoxCollider>();
+            Vector3 pos = new Vector3(x + WIDTH * 0.5f, height * 0.5f - 0.1f, 0);
+            boxCollider.transform.position = pos;
+            boxCollider.transform.localScale = new Vector3(WIDTH * 0.1f, height, 1);
 
             // test slope
             float depth1 = -WIDTH;

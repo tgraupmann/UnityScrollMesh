@@ -72,28 +72,9 @@ namespace ScrollMesh
                 _mRigidBody.AddForce(_mJumpForce * Vector3.up, ForceMode.VelocityChange);
             }
 
-            float height = _mTerrainData.GetHeight(transform.position.x);
-            if (_mRigidBody.transform.position.y < 0f)
-            {
-                Vector3 newPos = _mRigidBody.transform.position;
-                newPos.y = height + 10;
-                _mRigidBody.transform.position = newPos;
-                _mRigidBody.velocity = Vector3.zero;
-                return;
-            }
-
-            if ((_mRigidBody.transform.position.x + 4) > MeshManager.WORLD_SIZE)
-            {
-                Vector3 newPos = _mRigidBody.transform.position;
-                newPos.x = -MeshManager.WORLD_SIZE + 2;
-                newPos.y = _mTerrainData.GetHeight(newPos.x) + 10;
-                _mRigidBody.transform.position = newPos;
-                _mRigidBody.velocity = Vector3.zero;
-                return;
-            }
-
             transform.position = _mRigidBody.transform.position;
 
+            float height = _mTerrainData.GetHeight(transform.position.x);
             float delta = transform.position.y - height;
             _mCamera.orthographicSize = Mathf.Lerp(_mCamera.orthographicSize, Mathf.Clamp(delta*2, 10, 1000), Time.deltaTime);
         }
