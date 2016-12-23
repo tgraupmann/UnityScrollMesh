@@ -3,3 +3,4 @@ ScrollMesh.sln
 Library/
 Temp/
 .vs/
+ScrollMesh.Editor.csproj
