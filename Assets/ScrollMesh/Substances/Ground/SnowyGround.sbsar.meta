@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 74de5794d5af68f4199a6bb509ff44c8
-timeCreated: 1482442700
+timeCreated: 1482530687
 licenseType: Free
 SubstanceImporter:
   serializedVersion: 5
@@ -80,7 +80,7 @@ SubstanceImporter:
     materialInformation:
       serializedVersion: 5
       offset: {x: 0, y: 0}
-      scale: {x: 0.01, y: 0.01}
+      scale: {x: 1, y: 1}
       generateMipmaps: 1
       generateAllOutputs: 0
       animationUpdateRate: 0
@@ -91,13 +91,13 @@ SubstanceImporter:
           name: _BumpMap
         second:
           texture: {instanceID: 0}
-          scale: {x: 0.01, y: 0.01}
+          scale: {x: 1, y: 1}
           offset: {x: 0, y: 0}
       - first:
           name: _DetailAlbedoMap
         second:
           texture: {instanceID: 0}
-          scale: {x: 0.01, y: 0.01}
+          scale: {x: 1, y: 1}
           offset: {x: 0, y: 0}
       - first:
           name: _DetailMask
@@ -121,13 +121,13 @@ SubstanceImporter:
           name: _MainTex
         second:
           texture: {instanceID: 0}
-          scale: {x: 0.01, y: 0.01}
+          scale: {x: 1, y: 1}
           offset: {x: 0, y: 0}
       - first:
           name: _MetallicGlossMap
         second:
           texture: {instanceID: 0}
-          scale: {x: 0.01, y: 0.01}
+          scale: {x: 1, y: 1}
           offset: {x: 0, y: 0}
       - first:
           name: _OcclusionMap
@@ -139,7 +139,7 @@ SubstanceImporter:
           name: _ParallaxMap
         second:
           texture: {instanceID: 0}
-          scale: {x: 0.01, y: 0.01}
+          scale: {x: 1, y: 1}
           offset: {x: 0, y: 0}
       floats:
       - first:
@@ -241,8 +241,8 @@ SubstanceImporter:
     buildTargetSettings:
     - serializedVersion: 2
       buildTarget: 
-      textureWidth: 512
-      textureHeight: 512
+      textureWidth: 2048
+      textureHeight: 2048
       textureFormat: 0
       loadingBehavior: 1
   deletedPrototypes: []

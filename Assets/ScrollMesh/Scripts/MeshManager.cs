@@ -84,10 +84,12 @@ namespace ScrollMesh
             else
             {
                 // experiment
-                meshInstance._mUvs.Add(new Vector2(meshInstance._mVerts[f1].x, meshInstance._mVerts[f1].y));
-                meshInstance._mUvs.Add(new Vector2(meshInstance._mVerts[f2].x, meshInstance._mVerts[f2].y));
-                meshInstance._mUvs.Add(new Vector2(meshInstance._mVerts[f3].x, meshInstance._mVerts[f3].y));
-                meshInstance._mUvs.Add(new Vector2(meshInstance._mVerts[f4].x, meshInstance._mVerts[f4].y));
+                const float scaleX = 5f / WORLD_SIZE;
+                const float scaleY = 0.025f / HEIGHT;
+                meshInstance._mUvs.Add(new Vector2(meshInstance._mVerts[f1].x * scaleX, meshInstance._mVerts[f1].y * scaleY));
+                meshInstance._mUvs.Add(new Vector2(meshInstance._mVerts[f2].x * scaleX, meshInstance._mVerts[f2].y * scaleY));
+                meshInstance._mUvs.Add(new Vector2(meshInstance._mVerts[f3].x * scaleX, meshInstance._mVerts[f3].y * scaleY));
+                meshInstance._mUvs.Add(new Vector2(meshInstance._mVerts[f4].x * scaleX, meshInstance._mVerts[f4].y * scaleY));
             }
 
             Vector3 dir = 0.5f * (Vector3.up + Vector3.right);
