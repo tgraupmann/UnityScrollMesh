@@ -90,14 +90,18 @@ namespace ScrollMesh
                 //invert angle
                 angle = -angle;
             }
+            Quaternion newRot;
             if (height1 < height2)
             {
-                _mSkis.transform.localRotation = Quaternion.Euler(180 - angle, 0, 0);
+                newRot = Quaternion.Euler(180 - angle, 0, 0);
             }
             else
             {
-                _mSkis.transform.localRotation = Quaternion.Euler(180 + angle, 0, 0);
+                newRot = Quaternion.Euler(180 + angle, 0, 0);
             }
+
+            _mSkis.transform.localRotation = Quaternion.Lerp(_mSkis.transform.localRotation,
+                    newRot, 3 * Time.deltaTime);
 
             // adjust camera
             float height = _mTerrainData.GetHeight(transform.position.x);
