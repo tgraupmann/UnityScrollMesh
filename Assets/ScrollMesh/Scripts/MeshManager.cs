@@ -6,7 +6,7 @@ namespace ScrollMesh
     public class MeshManager : MonoBehaviour
     {
         private const int SIZE = 4096;
-        private const float WIDTH = 0.25f;
+        public const float WIDTH = 0.25f;
         private const float HEIGHT = 2f;
         private const float BOTTOM = -20f;
 

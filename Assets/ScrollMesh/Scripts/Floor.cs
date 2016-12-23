@@ -9,7 +9,7 @@ namespace ScrollMesh
         void OnCollisionEnter(Collision collision)
         {
             Vector3 pos = collision.gameObject.transform.position;
-            pos.y = _mHeight + 0.1f;
+            pos.y = _mHeight + 0.5f;
             collision.gameObject.transform.position = pos;
         }
     }

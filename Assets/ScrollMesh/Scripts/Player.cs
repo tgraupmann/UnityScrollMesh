@@ -15,6 +15,7 @@ namespace ScrollMesh
         public Rigidbody _mRigidBody = null;
         public GameObject _mGraphics = null;
         public Camera _mCamera = null;
+        public GameObject _mSkis = null;
 
         private void Start()
         {
@@ -72,8 +73,33 @@ namespace ScrollMesh
                 _mRigidBody.AddForce(_mJumpForce * Vector3.up, ForceMode.VelocityChange);
             }
 
+            // move graphics to rigidbody position
             transform.position = _mRigidBody.transform.position;
 
+            // adjust skis
+            float x1 = pos.x - MeshManager.WIDTH * 0.5f;
+            float x2 = pos.x + MeshManager.WIDTH * 0.5f;
+            float height1 = _mTerrainData.GetHeight(x1);
+            float height2 = _mTerrainData.GetHeight(x2);
+            Vector2 p1 = new Vector2(x1, height1);
+            Vector2 p2 = new Vector2(x2, height2);
+            Vector2 v = p1 - p2;
+            float angle = Vector2.Angle(Vector2.right, v);
+            if (_mGraphics.transform.localRotation.eulerAngles.y < 180f)
+            {
+                //invert angle
+                angle = -angle;
+            }
+            if (height1 < height2)
+            {
+                _mSkis.transform.localRotation = Quaternion.Euler(180 - angle, 0, 0);
+            }
+            else
+            {
+                _mSkis.transform.localRotation = Quaternion.Euler(180 + angle, 0, 0);
+            }
+
+            // adjust camera
             float height = _mTerrainData.GetHeight(transform.position.x);
             float delta = transform.position.y - height;
             _mCamera.orthographicSize = Mathf.Lerp(_mCamera.orthographicSize, Mathf.Clamp(delta*2, 10, 1000), Time.deltaTime);
