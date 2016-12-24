@@ -13,6 +13,7 @@ namespace ScrollMesh
         public const float WORLD_SIZE = SIZE * WIDTH;
 
         public Material _mGroundMaterial = null;
+        public Material _mGroundDistantMaterial = null;
         public Material _mSnowMaterial = null;
         public Material _mPhysicsMaterial = null;
 
@@ -36,7 +37,7 @@ namespace ScrollMesh
                 _mMesh = new Mesh();
             }
 
-            public void Apply(Material material)
+            public void Apply(Material material, Material material2)
             {
                 _mMesh.vertices = _mVerts.ToArray();
                 _mMesh.normals = _mNormals.ToArray();
@@ -44,7 +45,18 @@ namespace ScrollMesh
                 _mMesh.triangles = _mFaces.ToArray();
 
                 _mMeshRenderer = _mGameObject.GetComponent<MeshRenderer>();
-                _mMeshRenderer.sharedMaterial = material;
+                if (null != material2)
+                {
+                    _mMeshRenderer.materials = new Material[]
+                        {
+                        material,
+                        material2,
+                    };
+                }
+                else
+                {
+                    _mMeshRenderer.sharedMaterial = material;
+                }
 
                 _mMeshCollider.sharedMesh = _mMesh;
                 _mMeshFilter.mesh = _mMesh;
@@ -84,8 +96,8 @@ namespace ScrollMesh
             else
             {
                 // experiment
-                const float scaleX = 5f / WORLD_SIZE;
-                const float scaleY = 0.025f / HEIGHT;
+                const float scaleX = 25f / WORLD_SIZE;
+                const float scaleY = 0.125f / HEIGHT;
                 meshInstance._mUvs.Add(new Vector2(meshInstance._mVerts[f1].x * scaleX, meshInstance._mVerts[f1].y * scaleY));
                 meshInstance._mUvs.Add(new Vector2(meshInstance._mVerts[f2].x * scaleX, meshInstance._mVerts[f2].y * scaleY));
                 meshInstance._mUvs.Add(new Vector2(meshInstance._mVerts[f3].x * scaleX, meshInstance._mVerts[f3].y * scaleY));
@@ -176,9 +188,9 @@ namespace ScrollMesh
                 index += 4;
             }
 
-            _mGroundMesh.Apply(_mGroundMaterial);
-            _mSnowMesh.Apply(_mSnowMaterial);
-            _mPhysicsMesh.Apply(_mPhysicsMaterial);
+            _mGroundMesh.Apply(_mGroundMaterial, _mGroundDistantMaterial);
+            _mSnowMesh.Apply(_mSnowMaterial, null);
+            _mPhysicsMesh.Apply(_mPhysicsMaterial, null);
         }
     }
 }

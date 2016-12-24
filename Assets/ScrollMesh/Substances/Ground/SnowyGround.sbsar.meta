@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 74de5794d5af68f4199a6bb509ff44c8
-timeCreated: 1482530687
+timeCreated: 1482595997
 licenseType: Free
 SubstanceImporter:
   serializedVersion: 5
@@ -9,8 +9,8 @@ SubstanceImporter:
     name: SnowyGround
     prototypeName: SnowyGround
     shaderName: 
-    shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-    shaderKeywords: _EMISSION _METALLICGLOSSMAP _NORMALMAP _PARALLAXMAP
+    shader: {fileID: 30, guid: 0000000000000000f000000000000000, type: 0}
+    shaderKeywords: 
     renderQueue: -1
     lightmapFlags: 1
     inputs:
@@ -37,14 +37,14 @@ SubstanceImporter:
         texture: {instanceID: 0}
     - name: SnowMaskShape
       value:
-        scalar[0]: 2
+        scalar[0]: 1
         scalar[1]: 0
         scalar[2]: 0
         scalar[3]: 0
         texture: {instanceID: 0}
     - name: SnowAmmount
       value:
-        scalar[0]: 0.4
+        scalar[0]: 0.8
         scalar[1]: 0
         scalar[2]: 0
         scalar[3]: 0
@@ -88,55 +88,7 @@ SubstanceImporter:
       serializedVersion: 2
       texEnvs:
       - first:
-          name: _BumpMap
-        second:
-          texture: {instanceID: 0}
-          scale: {x: 1, y: 1}
-          offset: {x: 0, y: 0}
-      - first:
-          name: _DetailAlbedoMap
-        second:
-          texture: {instanceID: 0}
-          scale: {x: 1, y: 1}
-          offset: {x: 0, y: 0}
-      - first:
-          name: _DetailMask
-        second:
-          texture: {instanceID: 0}
-          scale: {x: 1, y: 1}
-          offset: {x: 0, y: 0}
-      - first:
-          name: _DetailNormalMap
-        second:
-          texture: {instanceID: 0}
-          scale: {x: 1, y: 1}
-          offset: {x: 0, y: 0}
-      - first:
-          name: _EmissionMap
-        second:
-          texture: {instanceID: 0}
-          scale: {x: 0.125, y: 0.125}
-          offset: {x: 0, y: 0}
-      - first:
           name: _MainTex
-        second:
-          texture: {instanceID: 0}
-          scale: {x: 1, y: 1}
-          offset: {x: 0, y: 0}
-      - first:
-          name: _MetallicGlossMap
-        second:
-          texture: {instanceID: 0}
-          scale: {x: 1, y: 1}
-          offset: {x: 0, y: 0}
-      - first:
-          name: _OcclusionMap
-        second:
-          texture: {instanceID: 0}
-          scale: {x: 1, y: 1}
-          offset: {x: 0, y: 0}
-      - first:
-          name: _ParallaxMap
         second:
           texture: {instanceID: 0}
           scale: {x: 1, y: 1}
@@ -196,7 +148,7 @@ SubstanceImporter:
       colors:
       - first:
           name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
+        second: {r: 1, g: 1, b: 1, a: 0.95}
       - first:
           name: _EmissionColor
         second: {r: 0, g: 0, b: 0, a: 1}
@@ -223,21 +175,9 @@ SubstanceImporter:
       wrapMode: 0
     textureAssignments:
     - shaderProp:
-        name: _BumpMap
-      material: {instanceID: 0}
-      baseUID: 3123539351
-    - shaderProp:
         name: _MainTex
       material: {instanceID: 0}
       baseUID: 3123537316
-    - shaderProp:
-        name: _MetallicGlossMap
-      material: {instanceID: 0}
-      baseUID: 3123534215
-    - shaderProp:
-        name: _ParallaxMap
-      material: {instanceID: 0}
-      baseUID: 3123539371
     buildTargetSettings:
     - serializedVersion: 2
       buildTarget: 

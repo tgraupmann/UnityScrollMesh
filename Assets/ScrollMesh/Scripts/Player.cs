@@ -4,6 +4,8 @@ namespace ScrollMesh
 {
     public class Player : MonoBehaviour
     {
+        const float MAX_ORTHOGRAPHIC_SIZE = 75f;
+
         [System.NonSerialized]
         public bool _mCanJump = false;
 
@@ -16,7 +18,8 @@ namespace ScrollMesh
         public GameObject _mGraphics = null;
         public Camera _mCamera = null;
         public GameObject _mSkis = null;
-        public Light _mLight = null;
+        //public Light _mLight = null;
+        public MeshManager _mMeshManager = null;
 
         private void Start()
         {
@@ -107,11 +110,20 @@ namespace ScrollMesh
             // adjust camera
             float height = _mTerrainData.GetHeight(transform.position.x);
             float delta = transform.position.y - height;
-            _mCamera.orthographicSize = Mathf.Lerp(_mCamera.orthographicSize, Mathf.Clamp(delta*2, 10, 1000), Time.deltaTime);
+            _mCamera.orthographicSize = Mathf.Lerp(_mCamera.orthographicSize, Mathf.Clamp(delta*2, 10, MAX_ORTHOGRAPHIC_SIZE), Time.deltaTime);
 
-            // adjust light
-            float rotX = Mathf.InverseLerp(0, 10, delta);
-            _mLight.transform.rotation = Quaternion.Euler(360 + rotX * 100f, 0, 0);
+            // adjust light for shadow
+            //float rotX = Mathf.InverseLerp(0, 10, delta);
+            //_mLight.transform.rotation = Quaternion.Euler(360 + rotX * 100f, 0, 0);
+
+            float t = Mathf.Clamp(Mathf.InverseLerp(0, 50, _mCamera.orthographicSize), 0f, 1f);
+            Color color = _mMeshManager._mGroundDistantMaterial.color;
+            color.a = t;
+            _mMeshManager._mGroundDistantMaterial.color = color;
+
+            //Vector2 texScale = Mathf.Lerp(1, 0.01f, t) * Vector2.one;
+            //_mGroundMaterial.SetTextureScale("_MainTex", texScale);
+            //_mGroundMaterial.SetTextureOffset("_MainTex", 0.1f * (Vector2.one - texScale));
         }
     }
 }
