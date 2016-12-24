@@ -16,6 +16,7 @@ namespace ScrollMesh
         public GameObject _mGraphics = null;
         public Camera _mCamera = null;
         public GameObject _mSkis = null;
+        public Light _mLight = null;
 
         private void Start()
         {
@@ -107,6 +108,10 @@ namespace ScrollMesh
             float height = _mTerrainData.GetHeight(transform.position.x);
             float delta = transform.position.y - height;
             _mCamera.orthographicSize = Mathf.Lerp(_mCamera.orthographicSize, Mathf.Clamp(delta*2, 10, 1000), Time.deltaTime);
+
+            // adjust light
+            float rotX = Mathf.InverseLerp(0, 10, delta);
+            _mLight.transform.rotation = Quaternion.Euler(360 + rotX * 100f, 0, 0);
         }
     }
 }
