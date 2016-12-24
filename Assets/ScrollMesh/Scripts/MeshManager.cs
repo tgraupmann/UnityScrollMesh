@@ -71,6 +71,13 @@ namespace ScrollMesh
 
         private List<GameObject> _mFloor = new List<GameObject>();
 
+        void OnApplicationQuit()
+        {
+            Color color = _mGroundDistantMaterial.color;
+            color.a = 1f;
+            _mGroundDistantMaterial.color = color;
+        }
+
         void CreateFaces(MeshInstance meshInstance, int index, bool useBarycentric)
         {
             int f1 = index + 0;
